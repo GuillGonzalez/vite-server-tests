@@ -1,20 +1,17 @@
 <template>
   <div class="results">
     <h1>This is the Questions view</h1>
-    <get-quizes/>
-    <get-questions/>
+    <get-quizzes/>
   </div>
 </template>
 
 <script>
-import GetQuizes from '../components/GetQuizes.vue'
-import GetQuestions from '../components/GetQuestions.vue'
+import GetQuizzes from '../components/GetQuizzes.vue'
 
 export default {
   name: 'QuestionsView',
   components: {
-    GetQuizes,
-    GetQuestions
+    GetQuizzes
   }
 }
 </script>
