@@ -1,17 +1,17 @@
 <template>
   <div class="results">
     <h1>This is the Questions view</h1>
-    <get-quizzes/>
+    <quiz></quiz>
   </div>
 </template>
 
 <script>
-import GetQuizzes from '../components/GetQuizzes.vue'
+import Quiz from '../components/Quiz.vue'
 
 export default {
   name: 'QuestionsView',
   components: {
-    GetQuizzes
+    Quiz
   }
 }
 </script>

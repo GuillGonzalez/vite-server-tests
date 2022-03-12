@@ -8,19 +8,18 @@
         v-bind:key="option.id"
         v-bind:answer="option.id"
         v-bind:title="option.title"
-        @click="selectAnswer(option.id)"
+        @click="selectAnswer(quizId, option.id)"
       ></question-option>
-<p> store: {{ store.count }} </p>
   </div>
 </template>
 
 <script>
-import { onMounted } from '@vue/runtime-core'
 import { ref } from 'vue'
 import axios from 'axios';
 import { APISettings } from '../config';
 import Option from './Option.vue'
-import { store } from '../store.js'
+import store from '../store/store.js'
+import { useStore } from 'vuex';
 
 export default {
   name: 'QuestionOptions',
@@ -28,7 +27,6 @@ export default {
     return {
       questionOptions: {},
       axiosError: '',
-      store
     }
   },
   props: {
@@ -39,6 +37,7 @@ export default {
     'question-option': Option
   },
   setup (props) {
+    const store = useStore()
     const questionOptions = ref([])
     const axiosError = ref('')
     axios.get(`${APISettings.baseURL}?action=answers&quizId=${props.quizId}&questionId=${props.questionId}`)
@@ -55,8 +54,8 @@ export default {
     }
   },
   methods: {
-    selectAnswer(answerId) {
-      store.count ++
+    selectAnswer(quizId, answerId) {
+      store.commit('append_answer', {'quizId': quizId, 'answer': answerId});
     }
   }
 }

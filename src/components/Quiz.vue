@@ -1,27 +1,37 @@
 <template>
-  <h3>This is the quiz {{ pkey }}</h3>
-  {{ title }} <button @click="loadQuestions(pkey)">{{ pkey }}</button>
-
-  <get-questions v-bind:quizId="pkey" ref="questions"/>
-  
+  <div>
+    <h2>Quiz</h2>
+    <p>Selected Quiz {{ selected_quiz }}</p>
+    <get-questions
+      v-bind:quizId="selected_quiz"
+      ref="questions"
+    ></get-questions>
+  </div>
+  <p>Choose another quiz <button @click="navigateToStart()">Go</button></p>
 </template>
 
 <script>
-import GetQuestions from '../components/GetQuestions.vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import store from '../store/store.js'
+import GetQuestions from './GetQuestions.vue'
+
 export default {
-  name: 'Quiz',
-  props: {
-    title: '',
-    pkey: 0
-  },
-  methods: {
-    loadQuestions(quizId) {
-      this.$refs.questions.loadAxios(quizId)
-    }
+  setup () {
+    const store = useStore()
   },
   components: {
     'get-questions': GetQuestions
+  },
+  data () {
+    return {
+      selected_quiz: computed(() => store.state.selected_quiz)
+    }
+  },
+  methods : {
+    navigateToStart () {
+      this.$router.push('start')
+    }
   }
 }
-
 </script>

@@ -1,50 +1,75 @@
 <template>
-<p>Current Quiz is {{ quizId }}</p>
+  <div>
+    <p>Current Quiz is {{ quizId }}</p>
 
-  <question 
-    v-for="(question, key ) in axiosResponse"
-    v-bind:key="question.id"
-    v-bind:questionId="question.id"
-    v-bind:title="question.title"
-    v-bind:quizId="quizId"
-    v-show="currentQuestion === key"
-  ></question>
+    <item-question 
+      v-for="(item, key) in questions"
+      v-bind:key="item.id"
+      v-bind:questionId="item.id"
+      v-bind:title="item.title"
+      v-bind:quizId="quizId"
+      v-show="currentQuestion === key"
+    ></item-question>
 
-  <button @click="currentQuestion--">Back</button>
-  <button @click="currentQuestion++">Next</button>
-  <p>This Quizz has {{ axiosResponse.length }} questions</p>
-  <p>Current question: {{ currentQuestion + 1}}</p>
+    <button @click="decrement()">Back</button>
+    <button @click="increment()">Next</button>
+
+    <p>This Quizz has {{ questions.length }} questions</p>
+    <p>Current question: {{ currentQuestion + 1}}</p>
+    <button 
+      v-show="currentQuestion == questions.length -1"
+      @click="navigateToResults()">Show Results</button>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
 import Question from './Question.vue';
 import { APISettings } from '../config';
+import { ref } from 'vue'
 
 export default {
-    data() {
-      return {
-        axiosResponse: {},
-        axiosError: '',
-        currentQuestion: 0
-      }
+  setup (props) {
+    const questions = ref([])
+    const axiosError = ref('')
+    axios.get(APISettings.baseURL + '?action=questions&quizId=' + props.quizId)
+      .then( function( response ){
+        questions.value = response.data;
+      }.bind(this))
+      .catch( function( error ){
+        axiosError.value = error;
+    }.bind(this));
+    return {
+      axiosError,
+      questions
+    }
+  },
+  data() {
+    return {
+      axiosError: '',
+      currentQuestion: 0,
+    }
+  },
+  props: {
+    quizId: 0
+  },
+  components: {
+      'item-question': Question,
+  },
+  methods: {
+    increment() {
+      ++this.currentQuestion > (this.questions.length-1)
+      ? this.currentQuestion = (this.questions.length-1)
+      : this.currentQuestion
     },
-    props: {
-      quizId: 0
+    decrement() {
+      --this.currentQuestion < 0
+      ? this.currentQuestion = 0
+      : this.currentQuestion
     },
-    components: {
-        'question': Question,
-    },
-    methods: {
-      loadAxios(quizzId) {
-        axios.get(APISettings.baseURL + '?action=questions&quizId=' + quizzId)
-          .then( function( response ){
-            this.axiosResponse = response.data;
-          }.bind(this))
-          .catch( function( error ){
-            this.axiosError = error;
-        }.bind(this));
-      }
+    navigateToResults() {
+      this.$router.push('results')
+    }
   }
 }
 </script>
