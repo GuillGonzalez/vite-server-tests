@@ -1,7 +1,5 @@
 <template>
   <div>
-    <p>Current Quiz is {{ quizId }}</p>
-
     <item-question 
       v-for="(item, key) in questions"
       v-bind:key="item.id"

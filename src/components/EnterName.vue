@@ -1,13 +1,13 @@
 <template>
   <form>
-    <label for="playerName">Enter name</label><br/>
     <input 
       v-model="player_name"
       type="text"
       name="playerName"
-      placeholder="Anonyme"
+      placeholder="Your Name"
       @focus="$emit('has_name')"
       @focusout="enter_name"/>
+    <label class="text-red-500" for="playerName">You need to enter a name</label>
   </form>
 </template>
 

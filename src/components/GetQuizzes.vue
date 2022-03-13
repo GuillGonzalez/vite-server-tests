@@ -1,13 +1,12 @@
 <template>
   <div>
-    <p>Quizzes Menu</p>
-    <p> Menu quiz: {{ current_quiz }} </p>
-    <p>Current Page </p>
+    <h3>Choose a Game</h3>
     <select-quiz 
       v-for="quiz in quizzes"
       v-bind:key="quiz.id"
       v-bind:pkey="quiz.id"
       v-bind:title="quiz.title"
+      v-on:click="on_select(quiz.id)"
     ></select-quiz>
   </div>
 </template>
@@ -47,7 +46,16 @@ export default {
       quizzes,
       axiosError
     }
+  },
+  methods : {
+    on_select (e) {console.log('select ' + e + ' ' + this.current_quiz)}
   }
 }
 
 </script>
+
+<style scoped>
+
+
+
+</style>

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <p>Current Quiz is {{ quizId }}</p>
-    <p>These are the options for question {{ questionId }}</p>
-      
       <question-option
         v-for="option in questionOptions"
         v-bind:key="option.id"

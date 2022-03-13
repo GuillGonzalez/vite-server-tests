@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <h1>Choose a quiz</h1>
+  <div class="flex justify-center align-center flex-col">
+    <h1 class="text-3xl font-bold">Technical Task</h1>
+    <h2 class="text-lg">Please, enter your name and choose a quiz</h2>
     <enter-name @has_name="has_name" />
     <get-quizzes v-show="hasName"/>
+    <button>Start</button>
   </div>
 </template>
 
@@ -20,7 +22,6 @@ export default defineComponent ({
   methods: {
     has_name() {
       this.hasName = true
-      console.log('has name')
     }
   },
   data() {

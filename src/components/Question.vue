@@ -1,8 +1,7 @@
 <template>
   <div>
-    <p>These are the options for question {{ questionId }} from quizz {{ quizId }}</p>
     <div>
-      <p> {{ questionId }} {{ title }}</p>
+      <p> {{ title }}</p>
       <question-options
         v-bind:quizId="quizId"
         v-bind:questionId="questionId"

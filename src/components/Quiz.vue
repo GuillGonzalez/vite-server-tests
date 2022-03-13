@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h2>Quiz</h2>
-    <p>Selected Quiz {{ selected_quiz }}</p>
     <get-questions
       v-bind:quizId="selected_quiz"
       ref="questions"
